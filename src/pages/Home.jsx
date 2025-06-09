@@ -32,12 +32,12 @@ export default function Home() {
                     >
                         Login
                     </button>
-                    <a
-                        href="/registro.html"
-                        className="bg-blue-600 px-4 py-2 rounded hover:bg-blue-700"
+                    <button
+                        onClick={() => navigate('/register')}
+                        className="bg-green-600 text-white px-5 py-2 rounded hover:bg-green-700 shadow-md transition"
                     >
                         Registrarse
-                    </a>
+                    </button>
                 </div>
             </nav>
 

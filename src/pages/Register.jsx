@@ -1,18 +1,43 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import apiUrl from '../../apiUrl';
 
 function Register() {
   const navigate = useNavigate();
 
-  const [nombre, setNombre] = useState('');
-  const [apellido, setApellido] = useState('');
-  const [correo, setCorreo] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
+  const nombre = useRef();
+  const apellido = useRef();
+  const email = useRef();
+  const password = useRef();
+  const confirmPassword = useRef();
+  
+  //const [nombre, setNombre] = useState('');
+  //const [apellido, setApellido] = useState('');
+  //const [correo, setCorreo] = useState('');
+  //const [password, setPassword] = useState('');
+  //const [confirmPassword, setConfirmPassword] = useState('');
+  //const [error, setError] = useState('');
 
-  const soloLetras = (texto) => /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/.test(texto);
+  //const soloLetras = (texto) => /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/.test(texto);
 
+  async function handleSubmit() {
+    try {
+      let data = {
+        nombre: nombre.current.value,
+        apellido: apellido.current.value,
+        email: email.current.value,
+        password: password.current.value,
+        confirmPassword: confirmPassword.current.value
+      };
+      await axios.post(apiUrl+"auth/registro", data);
+      console.log("hola")
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+/*
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -43,65 +68,76 @@ function Register() {
 
     // Redirigir, si es necesario
   };
-
+*/
   return (
     <div className="min-h-screen flex items-center justify-center bg-green-100">
       <div className="bg-white p-8 rounded shadow-md w-96">
         <h2 className="text-2xl font-semibold mb-4 text-center">Registro de Usuario</h2>
-
+{/*
         {error && (
           <div className="mb-4 text-red-600 text-sm text-center">
             {error}
           </div>
         )}
-
-        <form onSubmit={handleSubmit}>
+*/}
+        <form>
           <input
+            className="w-full p-2 mb-3 border rounded"
+            ref={nombre}
             type="text"
+            name="nombre"
+            id="nombre"
             placeholder="Nombre"
-            className="w-full p-2 mb-3 border rounded"
-            value={nombre}
-            onChange={(e) => setNombre(e.target.value)}
+            /* onChange={(e) => setNombre(e.target.value)} */
           />
           <input
+            className="w-full p-2 mb-3 border rounded"
+            ref={apellido}
             type="text"
+            name="apellido"
+            id="apellido"
             placeholder="Apellido"
-            className="w-full p-2 mb-3 border rounded"
-            value={apellido}
-            onChange={(e) => setApellido(e.target.value)}
+            /* onChange={(e) => setApellido(e.target.value)} */
           />
           <input
+            className="w-full p-2 mb-3 border rounded"
+            ref={email}
             type="email"
+            name="email"
+            id="email"
             placeholder="Correo @gmail.com"
-            className="w-full p-2 mb-3 border rounded"
-            value={correo}
-            onChange={(e) => setCorreo(e.target.value)}
+            /* onChange={(e) => setCorreo(e.target.value)} */
           />
           <input
+            className="w-full p-2 mb-3 border rounded"
+            ref={password}
             type="password"
+            name="password"
+            id="password"
             placeholder="Contraseña"
-            className="w-full p-2 mb-3 border rounded"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            /* onChange={(e) => setPassword(e.target.value)} */
           />
           <input
-            type="password"
-            placeholder="Repetir contraseña"
             className="w-full p-2 mb-4 border rounded"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            ref={confirmPassword}
+            type="password"
+            name="confirm-password"
+            id="confirm-password"
+            placeholder="Repetir contraseña"
+            /* onChange={(e) => setConfirmPassword(e.target.value)} */
           />
-          <button
-            type="submit"
+          <input
             className="w-full bg-green-600 text-white p-2 rounded hover:bg-green-700"
+            type="button"
+            value="Registrar"
+            onClick={handleSubmit}
           >
-            Registrar
-          </button>
+          </input>
         </form>
 
         <button
           type="button"
-          onClick={() => navigate('/')}
+          //onClick={handleSubmit}
           className="w-full bg-gray-400 text-white p-2 rounded hover:bg-gray-500 mt-2"
         >
           Cancelar

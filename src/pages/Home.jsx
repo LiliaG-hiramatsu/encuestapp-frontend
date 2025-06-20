@@ -11,7 +11,7 @@ export default function Home() {
                 {/* Logo */}
                 <div className="flex items-center">
                     <img
-                        src="/public/EncuestappLogo.png"
+                        src="/EncuestappLogo.png"
                         alt="Logo Encuestapp"
                         className="h-12 w-auto"
                     />
